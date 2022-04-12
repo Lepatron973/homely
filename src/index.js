@@ -1,17 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import store from "./config/store";
+import {Provider} from "react-redux";
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const general = [
+  {icon: "https://img.icons8.com/dusk/64/000000/list--v1.png", title: "Liste de courses", quantity: 0, path:"list"},
+  {icon: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-stock-logistics-flaticons-lineal-color-flat-icons-2.png", title: "Inventaire", quantity: 0, path:"stock/0"},
+  {icon:"https://img.icons8.com/dusk/64/000000/ingredients.png", title:"Articles", quantity: 0, path:"articles"},
+  {icon:"https://img.icons8.com/external-linector-lineal-color-linector/64/000000/external-food-self-protection-linector-lineal-color-linector.png", title:"Plats", quantity: 0, path:"plats"}
+]
+const category = ["Fruits et légumes","Produits laitiers","Céréales et féculents,Viandes","Eau","Boisson sucré","Boisson alcoolisé"];
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+if(localStorage.getItem("general")==null)
+  localStorage.setItem("general",JSON.stringify(general));
+if(localStorage.getItem("category")==null)
+  localStorage.setItem("category",JSON.stringify(category));
+if(localStorage.getItem("list")==null)
+  localStorage.setItem("list",JSON.stringify(([])));
+if(localStorage.getItem("ingredients")==null)
+  localStorage.setItem("ingredients",JSON.stringify(([])));
+if(localStorage.getItem("articles")==null)
+  localStorage.setItem("articles",JSON.stringify(([])));
+
+const root = createRoot(document.getElementById('root'));
+root.render( 
+  <Provider store={store}>
+      <App />
+  </Provider>
+)
+
