@@ -47,12 +47,15 @@ function getVideoPermission(){
           startStream(constraint)
     }
 }
-function onScanSuccess(decodedText, decodedResult) {
-  console.log(`Code scanned = ${decodedText}`, decodedResult);
+// check compatibility
+if (!('BarcodeDetector' in window)) {
+  alert('Barcode Detector is not supported by this browser.');
+} else {
+  alert('Barcode Detector supported!');
+
+  // create new detector
+  //var barcodeDetector = new BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
 }
-// var html5QrcodeScanner = new Html5QrcodeScanner(
-// "qr-reader", { fps: 10, qrbox: 250 });
-// html5QrcodeScanner.render(onScanSuccess);
 
 export function getDataByEan(ean){
 const data = fetch(`https://world.openfoodfacts.org/api/v0/product/${ean}.json`)
