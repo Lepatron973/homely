@@ -54,21 +54,24 @@ if (!('BarcodeDetector' in window)) {
   alert('Barcode Detector supported!');
 
   // create new detector
-  var barcodeDetector = new BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
+  var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
 }
 // check supported types
-BarcodeDetector.getSupportedFormats()
+barcodeDetector.getSupportedFormats()
   .then(supportedFormats => {
     supportedFormats.forEach(format => alert(format));
   });
-  barcodeDetector.detect(imageEl)
-  .then(barcodes => {
-    barcodes.forEach(barcode => alert(barcode.rawData));
-  })
-  .catch(err => {
-    console.log(err);
-  })
-export function getDataByEan(ean){
+  // barcodeDetector.detect(imageEl)
+  // .then(barcodes => {
+  //   barcodes.forEach(barcode => alert(barcode.rawData));
+  // })
+  // .catch(err => {
+  //   console.log(err);
+  // })
+
+
+
+  export function getDataByEan(ean){
 const data = fetch(`https://world.openfoodfacts.org/api/v0/product/${ean}.json`)
     .then(res=>res.json())
     .then(res=>res)
