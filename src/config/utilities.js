@@ -17,12 +17,18 @@ export function setPrevButton(){
     },100)
 
 }
+var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
+
 const startStream = async (constraints) => {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     handleStream(stream);
 };
   const handleStream = (stream) => {
     video.srcObject = stream;
+    barcodeDetector.detect(video.srcObject)
+  .then(barcodes => {
+    barcodes.forEach(barcode => alert(barcode.rawData));
+  })
 };
 const video = document.querySelector('video');
 function getVideoPermission(){
@@ -40,31 +46,22 @@ function getVideoPermission(){
                 ideal: 200,
                 max: 1440
               },
-              facingMode: 'user'
+              facingMode: 'environment'
             }
           }
           video.play();
           startStream(constraint)
     }
 }
+getVideoPermission()
 // check compatibility
-if (!('BarcodeDetector' in window)) {
-  alert('Barcode Detector is not supported by this browser.');
-} else {
-  alert('Barcode Detector supported!');
 
-  // create new detector
-  var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
-}
 // check supported types
-barcodeDetector.getSupportedFormats()
-  .then(supportedFormats => {
-    supportedFormats.forEach(format => alert(format));
-  });
-  // barcodeDetector.detect(imageEl)
-  // .then(barcodes => {
-  //   barcodes.forEach(barcode => alert(barcode.rawData));
-  // })
+// barcodeDetector.getSupportedFormats()
+//   .then(supportedFormats => {
+//     supportedFormats.forEach(format => alert(format));
+//   });
+  
   // .catch(err => {
   //   console.log(err);
   // })
