@@ -38,6 +38,7 @@ const startStream = async (constraints) => {
     barcodeDetector.detect(image)
   .then(barcodes => {
     barcodes.forEach(barcode => alert(JSON.stringify(barcode)));
+    alert('good')
   })
   .catch(err=>alert(err))
   
