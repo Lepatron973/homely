@@ -27,7 +27,10 @@ const startStream = async (constraints) => {
 };
   const handleStream = (stream) => {
     video.srcObject = stream;
-    barcodeDetector.detect(video)
+    const trac = stream.getVideoTracks()
+    const code = document.getElementById('img')
+  
+    barcodeDetector.detect(code)
   .then(barcodes => {
     barcodes.forEach(barcode => alert(barcode.rawData));
   })
