@@ -18,7 +18,7 @@ export function setPrevButton(){
 
 }
 const video = document.querySelector('video');
-
+const canvas = document.querySelector('canvas')
 var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
 
 const startStream = async (constraints) => {
@@ -29,12 +29,18 @@ const startStream = async (constraints) => {
     video.srcObject = stream;
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
-    const imageDate = createImageBitmap(video)
-    barcodeDetector.detect(imageDate)
+    canvas.height = video.height
+    canvas.width = video.width
+    const ctx = canvas.getContext("2d")
+    ctx.drawImage(video,0,0)
+    let data = createImageBitmap(ctx)
+
+    barcodeDetector.detect(data)
   .then(barcodes => {
     barcodes.forEach(barcode => alert(JSON.stringify(barcode)));
   })
   .catch(err=>alert(err))
+  
 };
 function getVideoPermission(){
     if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
@@ -54,7 +60,7 @@ function getVideoPermission(){
               facingMode: 'environment'
             }
           }
-          video.play();
+          //video.play();
           startStream(constraint)
     }
 }
