@@ -42,7 +42,6 @@ const startStream = async (constraints) => {
     })
     if(!response){
       handleStream(stream)
-      alert('false')
     }
   
 };
