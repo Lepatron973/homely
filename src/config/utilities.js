@@ -30,7 +30,7 @@ const startStream = async (constraints) => {
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
   
-    barcodeDetector.detect(code)
+    barcodeDetector.detect(video)
   .then(barcodes => {
     barcodes.forEach(barcode => alert(JSON.stringify(barcode)));
   })
