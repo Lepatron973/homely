@@ -26,6 +26,7 @@ const startStream = async (constraints) => {
     handleStream(stream);
 };
   const handleStream = (stream) => {
+    alert('stop')
     video.srcObject = stream;
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
