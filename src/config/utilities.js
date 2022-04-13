@@ -37,8 +37,9 @@ const startStream = async (constraints) => {
     console.log(image)
     const response = await barcodeDetector.detect(image)
     .then(barcodes => {
-      alert(JSON.stringify(barcodes.length))
+      let data = barcodes.length > 0 ? barcodes : alert("false");
     })
+    
   
 };
 function getVideoPermission(){
