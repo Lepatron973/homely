@@ -37,7 +37,7 @@ const startStream = async (constraints) => {
     console.log(image)
     const response = await barcodeDetector.detect(image)
     .then(barcodes => {
-      alert(JSON.stringify(typeof(barcodes)))
+      alert(JSON.stringify(barcodes.length))
     })
   
 };
