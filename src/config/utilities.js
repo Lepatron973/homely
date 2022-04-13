@@ -32,9 +32,9 @@ const startStream = async (constraints) => {
   
     barcodeDetector.detect(code)
   .then(barcodes => {
-    barcodes.forEach(barcode => alert("success"));
+    barcodes.forEach(barcode => alert(barcode));
   })
-  .catch(err=>alert('erro'))
+  .catch(err=>alert(err))
 };
 function getVideoPermission(){
     if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
