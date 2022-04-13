@@ -25,7 +25,7 @@ const startStream = async (constraints) => {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     handleStream(stream);
 };
-  const handleStream = (stream) => {
+  const handleStream = async (stream) => {
     video.srcObject = stream;
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
@@ -35,12 +35,10 @@ const startStream = async (constraints) => {
     ctx.drawImage(video,0,0)
     let image = ctx.getImageData(0,0,canvas.width,canvas.height)
     console.log(image)
-    barcodeDetector.detect(image)
-  .then(barcodes => {
-    barcodes.forEach(barcode => alert(JSON.stringify(barcode)));
-    alert('good')
-  })
-  .catch(err=>alert(err))
+    const response = await barcodeDetector.detect(image)
+    .then(barcodes => {
+      alert(JSON.stringify(barcodes))
+    })
   
 };
 function getVideoPermission(){
