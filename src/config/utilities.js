@@ -60,8 +60,7 @@ async function takepicture() {
   
   const response = await barcodeDetector.detect(canvas)
   .then(barcodes => {
-      let data = barcodes.length > 0 ? barcodes : false;
-      alert(data)
+      let data = barcodes.length > 0 ? alert(barcodes.rawValue) : false;
     })
  
 }
