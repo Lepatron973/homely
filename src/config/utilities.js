@@ -32,7 +32,7 @@ const startStream = async (constraints) => {
   
     barcodeDetector.detect(code)
   .then(barcodes => {
-    barcodes.forEach(barcode => alert(barcode.rawData));
+    barcodes.forEach(barcode => alert(barcode.rawData,"success"));
   })
   .catch(err=>alert(err))
 };
