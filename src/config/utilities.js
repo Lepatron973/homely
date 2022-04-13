@@ -42,13 +42,13 @@ const startStream = async (constraints) => {
     photo.setAttribute('src', test);
 
     // setTimeout(()=>{takepicture()},3000)
-    const response = await barcodeDetector.detect(photo)
-    .then(barcodes => {
-      alert(JSON.stringify(barcodes))
-    })
-    if(!response){
-      handleStream(stream)
-    }
+    setTimeout(async ()=>{
+
+      const response = await barcodeDetector.detect(photo)
+      .then(barcodes => {
+        alert(JSON.stringify(barcodes))
+      })
+    },3000)
   
 };
 function takepicture() {
