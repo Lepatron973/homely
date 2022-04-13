@@ -29,12 +29,13 @@ const startStream = async (constraints) => {
     video.srcObject = stream;
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
-    canvas.height = video.height
-    canvas.width = video.width
+    canvas.height = 200
+    canvas.width = 300
     const ctx = canvas.getContext("2d")
     ctx.drawImage(video,0,0)
-
-    barcodeDetector.detect(ctx)
+    let image = ctx.getImageData(0,0,canvas.width,canvas.height)
+    console.log(image)
+    barcodeDetector.detect(image)
   .then(barcodes => {
     barcodes.forEach(barcode => alert(JSON.stringify(barcode)));
   })
