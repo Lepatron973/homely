@@ -29,6 +29,7 @@ const startStream = async (constraints) => {
   .then(barcodes => {
     barcodes.forEach(barcode => alert(barcode.rawData));
   })
+  .catch(err=>alert(err))
 };
 const video = document.querySelector('video');
 function getVideoPermission(){
