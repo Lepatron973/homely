@@ -17,6 +17,8 @@ export function setPrevButton(){
     },100)
 
 }
+const video = document.querySelector('video');
+
 var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
 
 const startStream = async (constraints) => {
@@ -25,13 +27,12 @@ const startStream = async (constraints) => {
 };
   const handleStream = (stream) => {
     video.srcObject = stream;
-    barcodeDetector.detect(video.srcObject)
+    barcodeDetector.detect(video)
   .then(barcodes => {
     barcodes.forEach(barcode => alert(barcode.rawData));
   })
   .catch(err=>alert(err))
 };
-const video = document.querySelector('video');
 function getVideoPermission(){
     if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
     
