@@ -44,7 +44,7 @@ const startStream = async (constraints) => {
       }
     }, function(err) {
         if (err) {
-            alert(err);
+            alert("err");
             return
         }
         alert("Initialization finished. Ready to start");
