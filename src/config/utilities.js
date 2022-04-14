@@ -18,6 +18,7 @@ export function setPrevButton(){
     },100)
 
 }
+const p = document.querySelector('.ean')
 const photo = document.getElementById('photo')
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas')
@@ -43,12 +44,15 @@ const startStream = async (constraints) => {
       }
     }, function(err) {
         if (err) {
-            console.log(err);
+            alert(err);
             return
         }
-        console.log("Initialization finished. Ready to start");
+        alert("Initialization finished. Ready to start");
         Quagga.start();
-        Quagga.onDetected((data)=>document.querySelector('.ean').innerHTML=data.codeResult.code)
+        Quagga.onDetected((data)=>{
+          p.innerHTML = data.codeResult.code
+          p.style.color = "red"
+        })
     });
     //setInterval(()=>{takepicture()},2000)
     // const response = await barcodeDetector.detect(image)
