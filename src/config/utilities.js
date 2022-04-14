@@ -18,6 +18,7 @@ export function setPrevButton(){
     },100)
 
 }
+const start = document.querySelector('.play')
 const p = document.querySelector('.ean')
 const photo = document.getElementById('photo')
 const video = document.querySelector('video');
@@ -33,27 +34,29 @@ const startStream = async (constraints) => {
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
     let streaming;
-    Quagga.init({
-      inputStream : {
-        name : "Live",
-        type : "LiveStream",
-        target: video// Or '#yourElement' (optional)
-      },
-      decoder : {
-        readers : ["ean_reader"]
-      }
-    }, function(err) {
-        if (err) {
-            alert("err");
-            return
+    setTimeout(()=>{
+      Quagga.init({
+        inputStream : {
+          name : "Live",
+          type : "LiveStream",
+          target: video// Or '#yourElement' (optional)
+        },
+        decoder : {
+          readers : ["ean_reader"]
         }
-        alert("Initialization finished. Ready to start");
-        Quagga.start();
-        Quagga.onDetected((data)=>{
-          p.innerHTML = data.codeResult.code
-          p.style.color = "red"
-        })
-    });
+      }, function(err) {
+          if (err) {
+              alert(err)
+              return
+          }
+          alert("Initialization finished. Ready to start");
+          Quagga.start();
+          Quagga.onDetected((data)=>{
+            p.innerHTML = data.codeResult.code
+            p.style.color = "red"
+          })
+      });
+    },2000)
     //setInterval(()=>{takepicture()},2000)
     // const response = await barcodeDetector.detect(image)
     // .then(barcodes => {
@@ -106,7 +109,7 @@ function getVideoPermission(){
           startStream(constraint)
     }
 }
-getVideoPermission()
+start.addEventListener('click',getVideoPermission)
 // check compatibility
 
 // check supported types
