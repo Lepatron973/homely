@@ -1,3 +1,7 @@
+/* @preserve ASM BEGIN */
+
+/* @preserve ASM END */
+
 /*!
  * Chart.js v3.7.1
  * https://www.chartjs.org

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Quagga from '@ericblade/quagga2'; // ES6
 export function getPage(){
     let currentPage = window.location.pathname.split('/')[1]
     return currentPage;
@@ -20,7 +21,7 @@ export function setPrevButton(){
 const photo = document.getElementById('photo')
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas')
-var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
+//var barcodeDetector = new window.BarcodeDetector({formats: ['code_39', 'codabar', 'ean_13']});
 
 const startStream = async (constraints) => {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -31,14 +32,25 @@ const startStream = async (constraints) => {
     const trac = stream.getVideoTracks()
     const code = document.getElementById('img')
     let streaming;
-    video.addEventListener('canplay',()=>{
-      if(!streaming){
-        canvas.width = video.width
-        canvas.height = video.height
-        streaming = true;
+    Quagga.init({
+      inputStream : {
+        name : "Live",
+        type : "LiveStream",
+        target: video// Or '#yourElement' (optional)
+      },
+      decoder : {
+        readers : ["ean_reader"]
       }
-    },false)
-    setInterval(()=>{takepicture()},2000)
+    }, function(err) {
+        if (err) {
+            console.log(err);
+            return
+        }
+        console.log("Initialization finished. Ready to start");
+        Quagga.start();
+        Quagga.onDetected((data)=>document.querySelector('.ean').innerHTML=data.codeResult.code)
+    });
+    //setInterval(()=>{takepicture()},2000)
     // const response = await barcodeDetector.detect(image)
     // .then(barcodes => {
     //   let data = barcodes.length > 0 ? barcodes : false;
@@ -49,6 +61,10 @@ const startStream = async (constraints) => {
     // }
   
 };
+let req = new Request('http://localhost:3030/test',{
+  method:"POST",
+  data:{test:"salut"}
+})
 async function takepicture() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
@@ -58,10 +74,10 @@ async function takepicture() {
   
   //photo.setAttribute('src', data);
   
-  const response = await barcodeDetector.detect(canvas)
-  .then(barcodes => {
-      let data = barcodes.length > 0 ? alert(JSON.stringify(barcodes)) : false;
-    })
+//   const response = await barcodeDetector.detect(canvas)
+//   .then(barcodes => {
+//       let data = barcodes.length > 0 ? alert(JSON.stringify(barcodes)) : false;
+//     })
  
 }
 function getVideoPermission(){
